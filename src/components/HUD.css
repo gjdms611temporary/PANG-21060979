@@ -6,6 +6,9 @@
   gap: 16px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #08060d;
+  color: #fff;
+  text-shadow:
+    0 0 4px #000,
+    0 0 4px #000;
   pointer-events: none;
 }
