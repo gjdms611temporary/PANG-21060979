@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CANVAS_HEIGHT, CANVAS_WIDTH, FLOOR_Y, PLAYER_WIDTH } from '../game/constants'
+import { CANVAS_HEIGHT, CANVAS_WIDTH, FLOOR_Y, PLAYER_WIDTH, SCORE_TABLE } from '../game/constants'
 import { playerHitsBalloon, wireHitsBalloon } from '../game/collision'
 import { createBalloon, splitBalloon, updateBalloon, type Balloon } from '../game/entities/balloon'
 import { createPlayer, updatePlayer, type Player } from '../game/entities/player'
@@ -19,6 +19,7 @@ type GameState = {
   player: Player
   wire: Wire | null
   balloons: Balloon[]
+  score: number
 }
 
 const STARTING_LIVES = 1
@@ -36,6 +37,7 @@ function createInitialGameState(): GameState {
     player: createPlayer(),
     wire: null,
     balloons: createInitialBalloons(),
+    score: 0,
   }
 }
 
@@ -96,7 +98,10 @@ function Mission1Screen({ onExitToMain }: Mission1ScreenProps) {
       if (wire) {
         const hitIndex = state.balloons.findIndex((b) => wireHitsBalloon(wire, b))
         if (hitIndex !== -1) {
-          const children = splitBalloon(state.balloons[hitIndex])
+          const hitBalloon = state.balloons[hitIndex]
+          state.score += SCORE_TABLE[hitBalloon.size]
+          console.log('score:', state.score)
+          const children = splitBalloon(hitBalloon)
           state.balloons.splice(hitIndex, 1, ...children)
           state.wire = null
         }
