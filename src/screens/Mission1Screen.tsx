@@ -9,9 +9,10 @@ import { drawPlayer } from '../game/render/drawPlayer'
 import { drawWire } from '../game/render/drawWire'
 import { useJustPressed, useKeyboardState } from '../game/input'
 import { useGameLoop } from '../game/loop'
+import ClearScreen from './ClearScreen'
 import './Mission1Screen.css'
 
-type GameStatus = 'playing' | 'dead'
+type GameStatus = 'playing' | 'dead' | 'clear'
 
 type GameState = {
   player: Player
@@ -75,6 +76,8 @@ function Mission1Screen() {
 
       if (state.balloons.some((b) => playerHitsBalloon(state.player, b))) {
         setStatus('dead')
+      } else if (state.balloons.length === 0) {
+        setStatus('clear')
       }
     }
 
@@ -104,6 +107,7 @@ function Mission1Screen() {
         height={CANVAS_HEIGHT}
         className="mission1-canvas"
       />
+      {status === 'clear' && <ClearScreen />}
     </div>
   )
 }
