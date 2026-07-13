@@ -1,0 +1,29 @@
+.gameover-screen-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.gameover-screen-text {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #08060d;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  margin: 0;
+}
+
+.gameover-screen-button {
+  font-size: 1.25rem;
+  padding: 0.5em 1.5em;
+  border-radius: 0.5em;
+  border: none;
+  background: #aa3bff;
+  color: #fff;
+  cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CANVAS_HEIGHT, CANVAS_WIDTH, FLOOR_Y, PLAYER_WIDTH } from '../game/constants'
 import { playerHitsBalloon, wireHitsBalloon } from '../game/collision'
 import { createBalloon, splitBalloon, updateBalloon, type Balloon } from '../game/entities/balloon'
@@ -10,15 +10,19 @@ import { drawWire } from '../game/render/drawWire'
 import { useJustPressed, useKeyboardState } from '../game/input'
 import { useGameLoop } from '../game/loop'
 import ClearScreen from './ClearScreen'
+import GameOverScreen from './GameOverScreen'
 import './Mission1Screen.css'
 
-type GameStatus = 'playing' | 'dead' | 'clear'
+type GameStatus = 'playing' | 'dead' | 'clear' | 'gameover'
 
 type GameState = {
   player: Player
   wire: Wire | null
   balloons: Balloon[]
 }
+
+const STARTING_LIVES = 1
+const DEAD_RESET_DELAY_MS = 1000
 
 function createInitialBalloons(): Balloon[] {
   return [
@@ -27,16 +31,36 @@ function createInitialBalloons(): Balloon[] {
   ]
 }
 
-function Mission1Screen() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const gameStateRef = useRef<GameState>({
+function createInitialGameState(): GameState {
+  return {
     player: createPlayer(),
     wire: null,
     balloons: createInitialBalloons(),
-  })
+  }
+}
+
+function Mission1Screen() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const gameStateRef = useRef<GameState>(createInitialGameState())
   const keys = useKeyboardState()
   const consumeSpace = useJustPressed(' ')
   const [status, setStatus] = useState<GameStatus>('playing')
+  const [lives, setLives] = useState(STARTING_LIVES)
+
+  useEffect(() => {
+    if (status !== 'dead') return
+    const timer = setTimeout(() => {
+      gameStateRef.current = createInitialGameState()
+      setStatus('playing')
+    }, DEAD_RESET_DELAY_MS)
+    return () => clearTimeout(timer)
+  }, [status])
+
+  function handleRestart() {
+    gameStateRef.current = createInitialGameState()
+    setLives(STARTING_LIVES)
+    setStatus('playing')
+  }
 
   useGameLoop((dt) => {
     const canvas = canvasRef.current
@@ -75,7 +99,9 @@ function Mission1Screen() {
       }
 
       if (state.balloons.some((b) => playerHitsBalloon(state.player, b))) {
-        setStatus('dead')
+        const remaining = lives - 1
+        setLives(remaining)
+        setStatus(remaining <= 0 ? 'gameover' : 'dead')
       } else if (state.balloons.length === 0) {
         setStatus('clear')
       }
@@ -108,6 +134,7 @@ function Mission1Screen() {
         className="mission1-canvas"
       />
       {status === 'clear' && <ClearScreen />}
+      {status === 'gameover' && <GameOverScreen onRestart={handleRestart} />}
     </div>
   )
 }
