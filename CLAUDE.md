@@ -25,3 +25,4 @@ npm run lint      # Oxlint 정적 분석
 - [docs/FEATURES/main.md](docs/FEATURES/main.md) — 메인 화면 구성
 - [docs/FEATURES/game_rule.md](docs/FEATURES/game_rule.md) — 게임 룰 상세
 - [docs/FEATURES/mission1.md](docs/FEATURES/mission1.md) — Mission 1 난이도 규칙
+- [docs/PLAN.md](docs/PLAN.md) — Phase 별 목표를 세운 문서
