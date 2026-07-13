@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import HUD from '../components/HUD'
 import { CANVAS_HEIGHT, CANVAS_WIDTH, FLOOR_Y, PLAYER_WIDTH, SCORE_TABLE } from '../game/constants'
 import { playerHitsBalloon, wireHitsBalloon } from '../game/collision'
 import { createBalloon, splitBalloon, updateBalloon, type Balloon } from '../game/entities/balloon'
 import { createPlayer, updatePlayer, type Player } from '../game/entities/player'
 import { createWire, updateWire, type Wire } from '../game/entities/wire'
 import { drawBalloon } from '../game/render/drawBalloon'
+import { drawHUD } from '../game/render/drawHUD'
 import { drawPlayer } from '../game/render/drawPlayer'
 import { drawWire } from '../game/render/drawWire'
 import { useJustPressed, useKeyboardState } from '../game/input'
@@ -53,13 +53,11 @@ function Mission1Screen({ onExitToMain }: Mission1ScreenProps) {
   const consumeSpace = useJustPressed(' ')
   const [status, setStatus] = useState<GameStatus>('playing')
   const [lives, setLives] = useState(STARTING_LIVES)
-  const [displayScore, setDisplayScore] = useState(0)
 
   useEffect(() => {
     if (status !== 'dead') return
     const timer = setTimeout(() => {
       gameStateRef.current = createInitialGameState()
-      setDisplayScore(0)
       setStatus('playing')
     }, DEAD_RESET_DELAY_MS)
     return () => clearTimeout(timer)
@@ -68,7 +66,6 @@ function Mission1Screen({ onExitToMain }: Mission1ScreenProps) {
   function handleRestart() {
     gameStateRef.current = createInitialGameState()
     setLives(STARTING_LIVES)
-    setDisplayScore(0)
     setStatus('playing')
   }
 
@@ -104,7 +101,6 @@ function Mission1Screen({ onExitToMain }: Mission1ScreenProps) {
         if (hitIndex !== -1) {
           const hitBalloon = state.balloons[hitIndex]
           state.score += SCORE_TABLE[hitBalloon.size]
-          setDisplayScore(state.score)
           const children = splitBalloon(hitBalloon)
           state.balloons.splice(hitIndex, 1, ...children)
           state.wire = null
@@ -129,6 +125,7 @@ function Mission1Screen({ onExitToMain }: Mission1ScreenProps) {
     for (const balloon of state.balloons) {
       drawBalloon(ctx, balloon)
     }
+    drawHUD(ctx, state.score, lives)
 
     if (status === 'dead') {
       ctx.fillStyle = '#08060d'
@@ -146,7 +143,6 @@ function Mission1Screen({ onExitToMain }: Mission1ScreenProps) {
         height={CANVAS_HEIGHT}
         className="mission1-canvas"
       />
-      <HUD score={displayScore} lives={lives} />
       {status === 'clear' && <ClearScreen onExitToMain={onExitToMain} />}
       {status === 'gameover' && (
         <GameOverScreen onRestart={handleRestart} onExitToMain={onExitToMain} />
