@@ -18,3 +18,10 @@ npm run build     # 타입 체크(tsc -b) 후 프로덕션 빌드
 npm run preview   # 빌드 결과 로컬 프리뷰
 npm run lint      # Oxlint 정적 분석
 ```
+
+## 기획 문서
+
+- [docs/PRD.md](docs/PRD.md) — 전체 게임 개요 PRD
+- [docs/FEATURES/main.md](docs/FEATURES/main.md) — 메인 화면 구성
+- [docs/FEATURES/game_rule.md](docs/FEATURES/game_rule.md) — 게임 룰 상세
+- [docs/FEATURES/mission1.md](docs/FEATURES/mission1.md) — Mission 1 난이도 규칙
