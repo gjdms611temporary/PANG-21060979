@@ -21,3 +21,24 @@ export function useKeyboardState(): Set<string> {
 
   return keysRef.current
 }
+
+export function useJustPressed(key: string): () => boolean {
+  const pendingRef = useRef(false)
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === key && !event.repeat) {
+        pendingRef.current = true
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [key])
+
+  return () => {
+    const value = pendingRef.current
+    pendingRef.current = false
+    return value
+  }
+}
