@@ -31,7 +31,3 @@ npm run lint      # Oxlint 정적 분석
 ## 작업 규칙
 
 - 사용자가 지시한 작업이 끝날 때마다 반드시 변경사항을 git commit 후 push한다.
-
-## Claude Code 플러그인
-
-- `skill-creator` 플러그인 설치됨 (2026-07-13, `/plugin`으로 설치)
