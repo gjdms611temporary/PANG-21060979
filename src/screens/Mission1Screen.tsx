@@ -39,7 +39,8 @@ function Mission1Screen() {
       }
     }
 
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
     drawPlayer(ctx, state.player)
     if (state.wire) {
       drawWire(ctx, state.wire)
