@@ -1,5 +1,5 @@
 export const CANVAS_WIDTH = 800
-export const CANVAS_HEIGHT = 600
+export const CANVAS_HEIGHT = 500 // 8:5, matches the original 1989 arcade Pang's 384x240 ratio
 
 export const PLAYER_WIDTH = 32
 export const PLAYER_HEIGHT = 48
