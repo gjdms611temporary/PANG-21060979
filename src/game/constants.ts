@@ -9,3 +9,5 @@ export const PLAYER_SPEED = 240 // px/s
 export const WIRE_SPEED = 400 // px/s
 
 export const BALLOON_RADIUS = { large: 32, small: 18 }
+export const FLOOR_Y = CANVAS_HEIGHT
+export const GRAVITY = 500 // px/s^2

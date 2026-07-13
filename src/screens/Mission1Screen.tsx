@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { CANVAS_HEIGHT, CANVAS_WIDTH, PLAYER_WIDTH } from '../game/constants'
-import { createBalloon, type Balloon } from '../game/entities/balloon'
+import { createBalloon, updateBalloonVertical, type Balloon } from '../game/entities/balloon'
 import { createPlayer, updatePlayer, type Player } from '../game/entities/player'
 import { createWire, updateWire, type Wire } from '../game/entities/wire'
 import { drawBalloon } from '../game/render/drawBalloon'
@@ -61,6 +61,7 @@ function Mission1Screen() {
       drawWire(ctx, state.wire)
     }
     for (const balloon of state.balloons) {
+      updateBalloonVertical(balloon, dt)
       drawBalloon(ctx, balloon)
     }
   })
