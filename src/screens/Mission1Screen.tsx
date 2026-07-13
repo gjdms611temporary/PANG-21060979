@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { CANVAS_HEIGHT, CANVAS_WIDTH, PLAYER_WIDTH } from '../game/constants'
+import { CANVAS_HEIGHT, CANVAS_WIDTH, FLOOR_Y, PLAYER_WIDTH } from '../game/constants'
 import { wireHitsBalloon } from '../game/collision'
 import { createBalloon, updateBalloon, type Balloon } from '../game/entities/balloon'
 import { createPlayer, updatePlayer, type Player } from '../game/entities/player'
@@ -45,7 +45,7 @@ function Mission1Screen() {
     updatePlayer(state.player, keys, dt)
 
     if (consumeSpace() && state.wire === null) {
-      state.wire = createWire(state.player.x + PLAYER_WIDTH / 2, state.player.y)
+      state.wire = createWire(state.player.x + PLAYER_WIDTH / 2, FLOOR_Y)
     }
 
     if (state.wire) {

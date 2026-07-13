@@ -1,4 +1,4 @@
-import { PLAYER_Y } from '../constants'
+import { FLOOR_Y } from '../constants'
 import type { Wire } from '../entities/wire'
 
 export function drawWire(ctx: CanvasRenderingContext2D, wire: Wire): void {
@@ -6,6 +6,6 @@ export function drawWire(ctx: CanvasRenderingContext2D, wire: Wire): void {
   ctx.lineWidth = 2
   ctx.beginPath()
   ctx.moveTo(wire.x, wire.y)
-  ctx.lineTo(wire.x, PLAYER_Y)
+  ctx.lineTo(wire.x, FLOOR_Y)
   ctx.stroke()
 }
