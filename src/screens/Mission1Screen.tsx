@@ -6,6 +6,7 @@ import { drawPlayer } from '../game/render/drawPlayer'
 import { drawWire } from '../game/render/drawWire'
 import { useJustPressed, useKeyboardState } from '../game/input'
 import { useGameLoop } from '../game/loop'
+import './Mission1Screen.css'
 
 type GameState = {
   player: Player
@@ -47,7 +48,16 @@ function Mission1Screen() {
     }
   })
 
-  return <canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
+  return (
+    <div className="mission1-container">
+      <canvas
+        ref={canvasRef}
+        width={CANVAS_WIDTH}
+        height={CANVAS_HEIGHT}
+        className="mission1-canvas"
+      />
+    </div>
+  )
 }
 
 export default Mission1Screen
