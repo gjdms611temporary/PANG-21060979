@@ -4,6 +4,7 @@ import { playerHitsBalloon, wireHitsBalloon } from '../game/collision'
 import { createBalloon, splitBalloon, updateBalloon, type Balloon } from '../game/entities/balloon'
 import { createPlayer, updatePlayer, type Player } from '../game/entities/player'
 import { createWire, updateWire, type Wire } from '../game/entities/wire'
+import { drawBackground } from '../game/render/drawBackground'
 import { drawBalloon } from '../game/render/drawBalloon'
 import { drawHUD } from '../game/render/drawHUD'
 import { drawPlayer } from '../game/render/drawPlayer'
@@ -116,8 +117,7 @@ function Mission1Screen({ onExitToMain }: Mission1ScreenProps) {
       }
     }
 
-    ctx.fillStyle = '#ffffff'
-    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+    drawBackground(ctx)
     drawPlayer(ctx, state.player)
     if (state.wire) {
       drawWire(ctx, state.wire)
